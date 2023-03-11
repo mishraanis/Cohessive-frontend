@@ -9,8 +9,10 @@ import dropDownIconClosed from "../../Assets/dropDownIconClosed.png";
 import dropDownIconOpen from "../../Assets/dropDownIconOpen.png";
 import doneSymbolWhite from "../../Assets/doneSymbolWhite.png";
 import Select from "react-select";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import axios from "axios";
-export default function ChartSidebar({setIsOpen}) {
+export default function ChartSidebar({setIsOpen, chartReference}) {
     const [chartName, setChartName] = useState('');
     const [sync, setSync] = useState(false);
     const [exportTab, setExportTab] = useState(false);
@@ -20,6 +22,48 @@ export default function ChartSidebar({setIsOpen}) {
         { value: 'two', label: 'Two' }
     ]
     const [selectedOption, setSelectedOption] = useState(null);
+    const [csvData, setCsvData] = useState(null);
+    const [selectedExportOption, setSelectedExportOption] = useState(null);
+
+    const exportChart = () => {
+        console.log(chartReference.current, ' chart reference')
+        if(selectedExportOption === 'csv'){
+            axios.get(process.env.REACT_APP_BACKEND_URL + '/chart/export-csv/').then((res) => {
+                console.log(res.data);
+                setCsvData(res.data);
+                const blob = new Blob([res.data], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                console.log(url, ' link');
+                link.href = url;
+                link.setAttribute('download', 'data.csv');
+                link.click();
+            }).catch((err) => {
+                console.log(err);
+            })
+        }else if(selectedExportOption === 'pdf'){
+
+            html2canvas(chartReference.current).then((canvas) => {
+            // Create a new PDF document
+                console.log(canvas, ' canvas')
+                const pdf = new jsPDF();
+                const width = pdf.internal.pageSize.getWidth();
+                const height = pdf.internal.pageSize.getHeight();
+                // Add the image to the PDF
+                pdf.addImage(canvas.toDataURL(), 'PNG', 0, 0);
+                // Save the PDF
+                pdf.save('chart.pdf');
+            });
+        }else if(selectedExportOption === 'png'){
+            // create a png image of the chart
+            html2canvas(chartReference.current).then((canvas) => {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL();
+                link.setAttribute('download', 'chart.png');
+                link.click();
+            });
+        }
+    }
     return(
         <div className='relative flex flex-col w-full justify-center items-center pt-0'>
             <button className='w-[1.5rem] top-5 absolute right-3 rounded-full flex justify-center items-center'
@@ -114,18 +158,50 @@ export default function ChartSidebar({setIsOpen}) {
                         <p className='ml-2 text-sm font-InM mb-0'>Export</p>
                         <div className={`dropdown-export ${exportTab ? 'open-dropdown-export fadeIn' : ''}`}>
                             <div className='w-[90%] bg-[#F8F8F8] px-5 py-4 flex flex-col rounded-md'>
-                                <div className='flex w-full font-InM text-sm items-center pt-1 pb-1'><input type={'radio'} name={'exportOptions'} value={'png'} className='w-4 h-4' /><p className='font-InM text-sm mb-0 ml-1.5'>PNG</p></div>
-                                <div className='flex w-full font-InM text-sm items-center py-1'><input type={'radio'} name={'exportOptions'} value={'pdf'} className='w-4 h-4' /><p className='font-InM text-sm mb-0 ml-1.5'>PDF</p></div>
-                                <div className='flex w-full font-InM text-sm items-center py-1'><input type={'radio'} name={'exportOptions'} value={'png'} className='w-4 h-4' /><p className='font-InM text-sm mb-0 ml-1.5'>SVG</p></div>
-                                <div className='flex w-full font-InM text-sm items-center pt-1 pb-2'><input type={'radio'} name={'exportOptions'} value={'jpeg'} className='w-4 h-4' /><p className='font-InM text-sm mb-0 ml-1.5'>JPEG</p></div>
+                                <div className='flex w-full font-InM text-sm items-center pt-1 pb-1'>
+                                    <input type={'radio'} name={'exportOptions'} value={'png'} className='w-4 h-4'
+                                       onChange={
+                                          (e) => {
+                                            setSelectedExportOption(e.target.value);
+                                          }
+                                       }
+                                    />
+                                    <p className='font-InM text-sm mb-0 ml-1.5'>PNG</p>
+                                </div>
+                                <div className='flex w-full font-InM text-sm items-center py-1'>
+                                    <input type={'radio'} name={'exportOptions'} value={'pdf'} className='w-4 h-4'
+                                        onChange={
+                                            (e) => {
+                                                setSelectedExportOption(e.target.value);
+                                            }
+                                        }
+                                    />
+                                    <p className='font-InM text-sm mb-0 ml-1.5'>PDF</p>
+                                </div>
+                                <div className='flex w-full font-InM text-sm items-center py-1'>
+                                    <input type={'radio'} name={'exportOptions'} value={'csv'} className='w-4 h-4'
+                                        onChange={
+                                            (e) => {
+                                                setSelectedExportOption(e.target.value);
+                                            }
+                                        }
+                                    />
+                                    <p className='font-InM text-sm mb-0 ml-1.5'>CSV</p>
+                                </div>
+                                <div className='flex w-full font-InM text-sm items-center pt-1 pb-2'>
+                                    <input type={'radio'} name={'exportOptions'} value={'jpeg'} className='w-4 h-4'
+                                        onChange={
+                                            (e) => {
+                                                setSelectedExportOption(e.target.value);
+                                            }
+                                        }
+                                    />
+                                    <p className='font-InM text-sm mb-0 ml-1.5'>JPEG</p>
+                                </div>
                                 <button className='min-w-fit mt-2 px-4 bg-[#7E3AF2] rounded-lg flex justify-center py-2 items-center'
                                     onClick={() => {
                                         // navigate('/workspace');
-                                        axios.get(process.env.REACT_APP_BACKEND_URL + '/chart/export-csv/').then((res) => {
-                                            console.log(res.data);
-                                        }).catch((err) => {
-                                            console.log(err);
-                                        })
+                                        exportChart(selectedExportOption);
                                     }}
                                 >
                                     <p className='font-InM text-white text-[0.8rem] mb-0'>Export </p>

@@ -352,6 +352,7 @@ export default function OrganizationTree({ addEmpRef, updateEmpRef, newEmployee,
         setIsOpen(!isOpen);
     };
     const [chartData, setChartData] = useState(null);
+    const chartContainerRef = React.createRef();
     const getChartData = () => {
         axios.get(process.env.REACT_APP_BACKEND_URL + '/chart/organizations/getEmployees/'+'1').then(res => {
             console.log(res.data)
@@ -371,8 +372,9 @@ export default function OrganizationTree({ addEmpRef, updateEmpRef, newEmployee,
             <img src={sidebarIcon} className='w-16 cursor-pointer' alt='sidebar icon' onClick={toggleSidebar}/>
         </div>
         <div className={`sidebar z-20 ${isOpen ? 'open' : ''} `}>
-            <ChartSidebar setIsOpen={setIsOpen} />
+            <ChartSidebar setIsOpen={setIsOpen} chartReference={chartContainerRef} />
         </div>
+        <div className={`w-full h-full`} ref={chartContainerRef}>
       <Tree
         data={(treeData!==null) ? treeData : ((chartData!==null) ? chartData : orgChartJson)}
         translate={translate}
@@ -413,6 +415,7 @@ export default function OrganizationTree({ addEmpRef, updateEmpRef, newEmployee,
           console.log("node");
         }}
       />
+        </div>
     </div>
   );
 }

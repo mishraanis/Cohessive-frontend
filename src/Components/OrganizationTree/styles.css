@@ -37,16 +37,16 @@
 .right-sidebar{
     position: fixed;
     top: 0;
-    right: -300px;
+    right: -350px;
     height: 100%;
-    /*width: 14rem;*/
+    width: 35%;
     /*background-color: #fff;*/
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-in-out;
 }
 
 .right-sidebar.right-sidebar-open {
-    transform: translateX(-300px);
+    transform: translateX(-350px);
 }
 
 .sidebar-toggle {

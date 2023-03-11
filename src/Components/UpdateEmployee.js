@@ -7,7 +7,7 @@ import locationPlaceholderIcon from '../Assets/locationPlaceholderIcon.png'
 import {useState} from "react";
 import StyledInput from "./StyledInput";
 import axios from "axios";
-export default function  UpdateEmployee({reference, employeeId, setClickedEmployee}){
+export default function  UpdateEmployee({extendedEmployeeRef, updateEmployeeRef, open, setOpen, employeeId, setClickedEmployee}){
     const [updatedEmployee, setUpdatedEmployee] = useState({
         first_name: null,
         last_name: null,
@@ -83,10 +83,11 @@ export default function  UpdateEmployee({reference, employeeId, setClickedEmploy
         <div className='w-[38%] px-5 relative py-5 bg-white flex flex-col rounded-xl'>
             <button className='w-[1.5rem] top-3 absolute right-3 h-[1.5rem] bg-[#F3F4F6] rounded-full flex justify-center items-center'
                 onClick={() => {
-                    console.log(reference, ' is the reference');
-                    reference.current.classList.add('hidden');
-                    reference.current.style.zIndex = 0;
+                    console.log(updateEmployeeRef, ' is the updateEmployeeRef');
+                    updateEmployeeRef.current.classList.add('hidden');
+                    updateEmployeeRef.current.style.zIndex = 0;
                     setClickedEmployee(null);
+                    window.location.reload();
                 }}
             >
                 <img className='w-[0.8rem]' src={cross} />
@@ -138,18 +139,29 @@ export default function  UpdateEmployee({reference, employeeId, setClickedEmploy
             <div className='flex relative justify-end w-full mt-5'>
                 <button className='w-[7.5rem] mr-2 h-[2.5rem] bg-white border-[1.4px] border-[#1F2A37] rounded-lg flex justify-center items-center'
                     onClick={() => {
-                        reference.current.classList.add('hidden');
-                        reference.current.style.zIndex = 0;
+                        updateEmployeeRef.current.classList.add('hidden');
+                        updateEmployeeRef.current.style.zIndex = 0;
+                        window.location.reload();
                     }}
                 >
                     <p className='font-InM text-[#1F2A37] text-sm mb-0'>Cancel</p>
                 </button>
                 <button type='submit' className='w-[7.5rem] h-[2.5rem] bg-[#7E3AF2] rounded-lg flex justify-center items-center' onClick={() => {
-                    updateEmployee(updatedEmployee)
+                    updateEmployee(updatedEmployee);
+                    updateEmployeeRef.current.classList.add('hidden');
+                    updateEmployeeRef.current.style.zIndex = 0;
+                    window.location.reload();
                 }}>
                     <p className='font-InM text-white text-sm mb-0'>Save</p>
                 </button>
-                <button className='absolute left-0 top-0 w-[7.5rem] h-[2.5rem] bg-[#7E3AF2] rounded-lg flex justify-center items-center'>
+                <button className='absolute left-0 top-0 w-[7.5rem] h-[2.5rem] bg-[#7E3AF2] rounded-lg flex justify-center items-center'
+                    onClick={() => {
+                        setOpen(true);
+                        extendedEmployeeRef.current.classList.remove('hidden');
+                        extendedEmployeeRef.current.classList.add('block');
+                        extendedEmployeeRef.current.style.zIndex = 100;
+                    }}
+                >
                     <p className='font-InM text-white text-sm mb-0'>Add More Info</p>
                 </button>
             </div>

@@ -1,5 +1,5 @@
 import NavBar from "../Components/Navbar";
-import OrganizationTree from "../Components/OrganizationTree/Home";
+import OrganizationTree from "../Components/OrganizationTree/OrganizationTree";
 import AddEmployee from "../Components/AddEmployee";
 import {createContext, useEffect, useRef, useState} from "react";
 import '../../src/Components/OrganizationTree/styles.css'
@@ -39,17 +39,17 @@ export default function Workspace() {
             <OrganizationTree addEmpRef={addEmployeeRef} updateEmpRef={updateEmployeeRef} newEmployee={newEmployee} setNewEmployee={setNewEmployee} treeData={treeData} clickedEmployee={clickedEmployee} setClickedEmployee={setClickedEmployee} />
             <div className='w-full top-0 absolute h-screen hidden backdrop-brightness-50'  ref={addEmployeeRef}>
                 <div className='absolute top-[2%] left-1/3 w-full h-full fadeIn'>
-                    <AddEmployee reference={addEmployeeRef} newEmployee={newEmployee} setNewEmployee={setNewEmployee} treeData={treeData} setTreeData={setTreeData} />
+                    <AddEmployee extendedEmployeeRef={extendedEmployeeRef} addEmployeeRef={addEmployeeRef} open={open} setOpen={setOpen} newEmployee={newEmployee} setNewEmployee={setNewEmployee} treeData={treeData} setTreeData={setTreeData} />
                 </div>
             </div>
             <div className='w-full top-0 absolute h-screen hidden backdrop-brightness-50'  ref={updateEmployeeRef}>
                 <div className='absolute top-[2%] left-1/3 w-full h-full fadeIn'>
-                    <UpdateEmployee reference={updateEmployeeRef} employeeId={clickedEmployee} setClickedEmployee={setClickedEmployee} />
+                    <UpdateEmployee extendedEmployeeRef={extendedEmployeeRef} updateEmployeeRef={updateEmployeeRef} open={open} setOpen={setOpen} employeeId={clickedEmployee} setClickedEmployee={setClickedEmployee} />
                 </div>
             </div>
-            <div className={`w-full top-0 absolute h-screen hidden backdrop-brightness-50`} ref={extendedEmployeeRef}>
-                <div className={`right-sidebar ${open ? 'right-sidebar-open' : ''} absolute top-0 w-1/4 h-full fadeIn`}>
-                    <AddEmployeeExtended reference={extendedEmployeeRef} employeeId={clickedEmployee} setClickedEmployee={setClickedEmployee} />
+            <div className={`w-full top-0 absolute  h-full ${open ? 'z-40' : '-z-10'}`} ref={extendedEmployeeRef}>
+                <div className={`right-sidebar overflow-y-scroll  ${open ? 'right-sidebar-open' : ''} fadeIn`}>
+                    <AddEmployeeExtended setTreeData={setTreeData} setOpen={setOpen} setClickedEmployee={setClickedEmployee} newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
                 </div>
             </div>
 

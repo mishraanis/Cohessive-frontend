@@ -31,7 +31,7 @@ export default function  CreateNewChart(props){
             hiddenFileInputButton.current.classList.add('hidden');
         }
         setFile(fileUploaded);
-        axios.post(process.env.REACT_APP_BACKEND_URL + '/chart/upload-csv/', fileUploaded,
+        axios.post(process.env.REACT_APP_BACKEND_URL + '/chart/upload-csv/', {csv_file: fileUploaded},
             {
                 headers: {
                     'Content-Type': 'multipart/form-data'

@@ -10,7 +10,7 @@ import locationPlaceholderIcon from '../Assets/locationPlaceholderIcon.png'
 import {useContext, useState} from "react";
 import StyledInput from "./StyledInput";
 import axios from "axios";
-export default function  AddEmployee({reference, newEmployee, setNewEmployee, treeData, setTreeData}){
+export default function  AddEmployee({extendedEmployeeRef,addEmployeeRef, open, setOpen, newEmployee, setNewEmployee, treeData, setTreeData}){
     // const [newEmployee, setNewEmployee] = useState({
     //     first_name: '',
     //     last_name: '',
@@ -45,7 +45,7 @@ export default function  AddEmployee({reference, newEmployee, setNewEmployee, tr
             }).then(r => {
                 console.log(r.data);
                 setTreeData(r.data[0]);
-                reference.current.classList.add('hidden');
+                addEmployeeRef.current.classList.add('hidden');
             }).catch(e1 => {
                 console.log(e1);
             })
@@ -57,9 +57,9 @@ export default function  AddEmployee({reference, newEmployee, setNewEmployee, tr
         <div className='w-[38%] px-5 relative py-5 bg-white flex flex-col rounded-xl'>
             <button className='w-[1.5rem] top-3 absolute right-3 h-[1.5rem] bg-[#F3F4F6] rounded-full flex justify-center items-center'
                 onClick={() => {
-                    console.log(newEmployee, ' is the reference');
-                    reference.current.classList.add('hidden');
-                    reference.current.style.zIndex = 0;
+                    console.log(newEmployee, ' is the addEmployeeRef');
+                    addEmployeeRef.current.classList.add('hidden');
+                    addEmployeeRef.current.style.zIndex = 0;
                     window.location.reload();
                 }}
             >
@@ -108,8 +108,8 @@ export default function  AddEmployee({reference, newEmployee, setNewEmployee, tr
             <div className='flex relative justify-end w-full mt-5'>
                 <button className='w-[7.5rem] mr-2 h-[2.5rem] bg-white border-[1.4px] border-[#1F2A37] rounded-lg flex justify-center items-center'
                     onClick={() => {
-                        reference.current.classList.add('hidden');
-                        reference.current.style.zIndex = 0
+                        addEmployeeRef.current.classList.add('hidden');
+                        addEmployeeRef.current.style.zIndex = 0
                         window.location.reload();
                     }}
                 >
@@ -120,7 +120,19 @@ export default function  AddEmployee({reference, newEmployee, setNewEmployee, tr
                 }}>
                     <p className='font-InM text-white text-sm mb-0'>Save</p>
                 </button>
-                <button className='absolute left-0 top-0 w-[7.5rem] h-[2.5rem] bg-[#7E3AF2] rounded-lg flex justify-center items-center'>
+                <button className='absolute left-0 top-0 w-[7.5rem] h-[2.5rem] bg-[#7E3AF2] rounded-lg flex justify-center items-center'
+                    onClick={() => {
+                        // console.log("clicked and value of open ", open)
+                        console.log(extendedEmployeeRef.current.classList, ' is the extendedEmployeeRef');
+                        // extendedEmployeeRef.current.classList.remove('hidden');
+                        // extendedEmployeeRef.current.classList.add('block');
+                        addEmployeeRef.current.classList.add('hidden');
+                        addEmployeeRef.current.style.zIndex = 0;
+                        // extendedEmployeeRef.current.classList.remove('-z-10');
+                        // extendedEmployeeRef.current.classList.add('z-40');
+                        setOpen(true);
+                    }}
+                >
                     <p className='font-InM text-white text-sm mb-0'>Add More Info</p>
                 </button>
             </div>
