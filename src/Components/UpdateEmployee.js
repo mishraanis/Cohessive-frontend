@@ -156,10 +156,11 @@ export default function  UpdateEmployee({extendedEmployeeRef, updateEmployeeRef,
                 </button>
                 <button className='absolute left-0 top-0 w-[7.5rem] h-[2.5rem] bg-[#7E3AF2] rounded-lg flex justify-center items-center'
                     onClick={() => {
+                        // extendedEmployeeRef.current.classList.remove('hidden');
+                        // extendedEmployeeRef.current.classList.add('block');
+                        updateEmployeeRef.current.style.zIndex = 0;
+                        updateEmployeeRef.current.classList.add('hidden');
                         setOpen(true);
-                        extendedEmployeeRef.current.classList.remove('hidden');
-                        extendedEmployeeRef.current.classList.add('block');
-                        extendedEmployeeRef.current.style.zIndex = 100;
                     }}
                 >
                     <p className='font-InM text-white text-sm mb-0'>Add More Info</p>

@@ -12,7 +12,7 @@ import StyledInput from "./StyledInput";
 import employeeNameIcon from "../Assets/employeeNameIcon.png";
 import axios from "axios";
 
-export default function AddEmployeeExtended({setTreeData, setOpen, employeeId, setClickedEmployee, newEmployee, setNewEmployee}) {
+export default function AddEmployeeExtended({setTreeData, open, setOpen, employeeId, setClickedEmployee, newEmployee, setNewEmployee}) {
     const addEmployee = () => {
         console.log(newEmployee, ' is the new employee')
 
@@ -37,9 +37,10 @@ export default function AddEmployeeExtended({setTreeData, setOpen, employeeId, s
         }).catch(e => {
             console.log(e, ' is the error')
         })
-    }
+    };
+    console.log(open, " is open");
     return(
-        <div className='relative flex flex-col w-full items-center'>
+        <div className='relative flex flex-col w-full items-center bg-white'>
             <div className='w-full flex flex-col items-start px-4 justify-evenly border-b-2 border-[#E5E7EB] pt-5 pb-0'>
                 <button className='w-[1.5rem] h-[1.5rem] flex justify-center items-center' onClick={() => {
                     setOpen(false);

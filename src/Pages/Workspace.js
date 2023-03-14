@@ -49,7 +49,7 @@ export default function Workspace() {
             </div>
             <div className={`w-full top-0 absolute  h-full ${open ? 'z-40' : '-z-10'}`} ref={extendedEmployeeRef}>
                 <div className={`right-sidebar overflow-y-scroll  ${open ? 'right-sidebar-open' : ''} fadeIn`}>
-                    <AddEmployeeExtended setTreeData={setTreeData} setOpen={setOpen} setClickedEmployee={setClickedEmployee} newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
+                    <AddEmployeeExtended setTreeData={setTreeData} open={open} setOpen={setOpen} setClickedEmployee={setClickedEmployee} newEmployee={newEmployee} setNewEmployee={setNewEmployee} />
                 </div>
             </div>
 

@@ -85,15 +85,19 @@ const renderForeignObjectNode1 = ({
         onMouseEnter={(e) => {
           //select element with id=nodeDatum.attributes?.id
           // console.log(document.getElementById(`plusButton_${nodeDatum.attributes?.id.toString()}`), ' is the element');
-          document.getElementById(
-            `plusButton_${nodeDatum.attributes?.id * 3}`
-          ).style.display = "block";
+            if(nodeDatum?.parentId){
+                document.getElementById(
+                    `plusButton_${nodeDatum.attributes?.id * 3}`
+                ).style.display = "block";
+            }
           document.getElementById(
             `plusButton_${nodeDatum.attributes?.id * 3 + 1}`
           ).style.display = "block";
-          document.getElementById(
-            `plusButton_${nodeDatum.attributes?.id * 3 + 2}`
-          ).style.display = "block";
+            if(nodeDatum?.parentId){
+                document.getElementById(
+                    `plusButton_${nodeDatum.attributes?.id * 3 + 2}`
+                ).style.display = "block";
+            }
           //remove space from id
 
           // console.log(`#plusButton-${nodeDatum.attributes?.id.toString()}`, 'is the id');
@@ -116,6 +120,9 @@ const renderForeignObjectNode1 = ({
       >
 
         <AddCircleOutlineIcon
+            sx={{
+                color: "#7E3AF2",
+            }}
           style={{
             display: "none",
             zIndex: 20,
@@ -129,12 +136,15 @@ const renderForeignObjectNode1 = ({
             addEmpRef.current.classList.add("block");
             setNewEmployee({
                 ...newEmployee,
-                reportingManager: nodeDatum.attributes?.parentId,
+                reporting_manager: nodeDatum.attributes?.parentId,
             })
             // console.log("Add new node", nodeDatum.attributes.id);
           }}
         />
         <AddCircleOutlineIcon
+            sx={{
+                color: "#7E3AF2",
+            }}
           style={{
             display: "none",
           }}
@@ -147,25 +157,27 @@ const renderForeignObjectNode1 = ({
             // console.log("Add new node", nodeDatum.attributes.id);
               setNewEmployee({
                 ...newEmployee,
-                reportingManager: nodeDatum.attributes?.id,
+                reporting_manager: nodeDatum.attributes?.id,
             })
           }}
         />
         <AddCircleOutlineIcon
+            sx={{
+                color: "#7E3AF2",
+            }}
           style={{
             display: "none",
-
           }}
           id={`plusButton_${nodeDatum.attributes?.id * 3 + 2}`}
           className="absolute top-[7rem] left-[1rem]"
           onClick={(e) => {
             e.stopPropagation();
             addEmpRef.current.classList.remove("hidden");
-            addEmpRef.current.classList.add("block");
             setNewEmployee({
                 ...newEmployee,
-                reportingManager: nodeDatum.attributes?.parentId,
+                reporting_manager: nodeDatum.attributes?.parentId,
             })
+              addEmpRef.current.classList.add("block");
             // console.log("Add new node", nodeDatum.attributes.id);
           }}
         />

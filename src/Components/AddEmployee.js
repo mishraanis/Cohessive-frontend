@@ -46,6 +46,7 @@ export default function  AddEmployee({extendedEmployeeRef,addEmployeeRef, open, 
                 console.log(r.data);
                 setTreeData(r.data[0]);
                 addEmployeeRef.current.classList.add('hidden');
+                window.location.reload();
             }).catch(e1 => {
                 console.log(e1);
             })
@@ -82,7 +83,7 @@ export default function  AddEmployee({extendedEmployeeRef,addEmployeeRef, open, 
                 <div className='flex w-full justify-between'>
                     <StyledInput isRequired={true} style={{
                         width:"49%",
-                    }} fieldValue={"title"} type='text' value={newEmployee.title} employee={newEmployee} setValue={setNewEmployee} placeholder='Title' label='Title' icon={titlePlaceholderIcon} />
+                    }} fieldValue={"designation"} type='text' value={newEmployee.designation} employee={newEmployee} setValue={setNewEmployee} placeholder='Designation' label='Designation' icon={titlePlaceholderIcon} />
                     <StyledInput isRequired={true} style={{
                         width:"49%",
                     }} fieldValue={"email"} type='email' value={newEmployee.email} employee={newEmployee} setValue={setNewEmployee} placeholder='name@example.com' label='Work Email' icon={emailPlaceholderIcon} />
@@ -91,10 +92,7 @@ export default function  AddEmployee({extendedEmployeeRef,addEmployeeRef, open, 
                     <StyledInput isRequired={true} style={{
                         width:"49%",
                     }} fieldValue={"phone"} type='text' value={newEmployee.phone} employee={newEmployee} setValue={setNewEmployee} placeholder='10 digit phone number' label='Phone number' icon={titlePlaceholderIcon} />
-                    <StyledInput isRequired={false} style={{
-                        width:"49%",
-                    }} fieldValue={"reporting_manager"} type='text' value={newEmployee.reporting_manager} employee={newEmployee} setValue={setNewEmployee} placeholder='Manager Name' label='Reporting Manager' icon={employeeNameIcon} />
-                </div>
+                    </div>
                 <div className='flex w-full justify-between'>
                     <StyledInput isRequired={true} style={{
                         width:"49%",
@@ -110,7 +108,7 @@ export default function  AddEmployee({extendedEmployeeRef,addEmployeeRef, open, 
                     onClick={() => {
                         addEmployeeRef.current.classList.add('hidden');
                         addEmployeeRef.current.style.zIndex = 0
-                        window.location.reload();
+                        // window.location.reload();
                     }}
                 >
                     <p className='font-InM text-[#1F2A37] text-sm mb-0'>Cancel</p>

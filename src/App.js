@@ -3,6 +3,7 @@ import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Dashboard from "./Pages/NUXDashboard";
 import Workspace from "./Pages/Workspace";
+// import Script
 function App() {
   return (
     <>

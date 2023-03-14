@@ -11,7 +11,8 @@ import doneSymbolWhite from "../../Assets/doneSymbolWhite.png";
 import Select from "react-select";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import axios from "axios";
+import { getAxios } from '../../script/sdk-client';
+let axios = getAxios()
 export default function ChartSidebar({setIsOpen, chartReference}) {
     const [chartName, setChartName] = useState('');
     const [sync, setSync] = useState(false);
@@ -42,7 +43,6 @@ export default function ChartSidebar({setIsOpen, chartReference}) {
                 console.log(err);
             })
         }else if(selectedExportOption === 'pdf'){
-
             html2canvas(chartReference.current).then((canvas) => {
             // Create a new PDF document
                 console.log(canvas, ' canvas')
